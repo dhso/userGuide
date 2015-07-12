@@ -1,0 +1,36 @@
+#数据库配置
+wx.jdbcDriver = ${wx.jdbcDriver}
+wx.jdbcUrl = ${wx.jdbcUrl}
+wx.jdbcUser = ${wx.jdbcUser}
+wx.jdbcPassword = ${wx.jdbcPassword}
+wx.devMode = ${wx.devMode}
+
+#微信配置
+wx.url=http://oraybang.wicp.net/jfsys/wechat
+wx.token=apphui
+wx.appId = wx396714621dc72788
+wx.appSecret = e5adb6d4b8326ead8bfe27dfe92a2738
+wx.encryptMessage = false
+wx.encodingAesKey = ASDFGHJKL
+
+#支付宝配置
+alipay.user = dhso@163.com
+alipay.partner = 2088102221655815
+alipay.key = fd48ig23w67gyjoc08c82sji3eabe8ie
+alipay.private_key = fd48ig23w67gyjoc08c82sji3eabe8ie
+alipay.ali_public_key = fd48ig23w67gyjoc08c82sji3eabe8ie
+
+#七牛云配置
+qiniu.ak = s4qqqDqXBOcvFKUDsAIDPk1X7p1df1XKAv-2rhU6
+qiniu.sk = PKnBKg_fcc3otG0C_0WPPvW3COLTxW6FaWrJ1bUw
+qiniu.bucket = apphui
+qiniu.url = http://apphui.qiniudn.com/
+
+#飞信配置
+fetion.mobile = 15996586864
+fetion.password = wj19881130
+#fetion.mobile = 15262731827
+#fetion.password = dhso923389
+
+#WIFI验证码有效期（分钟）
+wifi.captcha = 30
