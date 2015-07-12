@@ -7,7 +7,6 @@ import com.jfinal.core.Controller;
 
 public class CrmController extends Controller {
 	// 默认登录页面
-	@RequiresAuthentication
 	public void index() {
 		render("index.htm");
 	}

@@ -1,10 +1,6 @@
 package config;
 
 import modules.crm.controller.CrmController;
-import modules.system.controller.SecurityController;
-import modules.wechat.controller.WechatApiController;
-import modules.wechat.controller.WechatMsgController;
-import modules.weshop.controller.ShopController;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.util.JdbcConstants;
@@ -26,19 +22,14 @@ import com.jfinal.plugin.druid.DruidPlugin;
 import com.jfinal.plugin.druid.DruidStatViewHandler;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.render.FreeMarkerRender;
-import com.jfinal.render.IErrorRenderFactory;
-import com.jfinal.render.RedirectRender;
-import com.jfinal.render.Render;
 
 import frame.interceptor.ReqResInViewInterceptor;
-import frame.plugin.event.EventPlugin;
 import frame.plugin.shiro.core.ShiroInterceptor;
 import frame.plugin.shiro.core.ShiroPlugin;
 import frame.plugin.shiro.freemarker.ShiroTags;
 import frame.plugin.tablebind.AutoTableBindPlugin;
 import frame.plugin.tablebind.SimpleNameStyles;
 import frame.sdk.fetion.kit.FetionPlugin;
-import frame.sdk.wechat.api.ApiConfigKit;
 
 public class BaseConfig extends JFinalConfig {
 
@@ -50,27 +41,10 @@ public class BaseConfig extends JFinalConfig {
 		me.setI18nDefaultBaseName("i18n");
 		me.setI18nDefaultLocale("zh_CN");
 		me.setDevMode(PropKit.getBoolean("wx.devMode", false));
-		// 微信设置
-		ApiConfigKit.setDevMode(me.getDevMode());
-		// 设置错误模板
-		me.setErrorView(401, "/security/signin");
-		me.setErrorView(403, "/security/signin");
-		me.setErrorView(404, "/security/err404");
-		me.setErrorView(500, "/security/err500");
-		me.setErrorRenderFactory(new IErrorRenderFactory() {
-			@Override
-			public Render getRender(int errorCode, String view) {
-				return new RedirectRender(view, true);
-			}
-		});
 	}
 
 	public void configRoute(Routes me) {
 		this.routes = me;
-		me.add("/security", SecurityController.class, "/security");// 安全
-		me.add("/shop", ShopController.class, "/shop");// 商城
-		me.add("/wechat", WechatMsgController.class);// 微信
-		me.add("/wechatApi", WechatApiController.class, "/wechatApi");// 微信API
 		me.add("/crm", CrmController.class, "/crm");// CRM
 	}
 
@@ -94,15 +68,6 @@ public class BaseConfig extends JFinalConfig {
 		autoTableBindPlugin.setContainerFactory(new CaseInsensitiveContainerFactory());
 		autoTableBindPlugin.setDevMode(PropKit.getBoolean("wx.devMode", false));
 		me.add(autoTableBindPlugin);
-		// 添加消息驱动插件
-		EventPlugin evevtPlugin = new EventPlugin();
-		// 设置为异步，默认同步
-		evevtPlugin.async();
-		// 设置扫描jar包，默认不扫描
-		evevtPlugin.scanJar();
-		// 设置监听器默认包，默认全扫描
-		evevtPlugin.scanPackage("modules");
-		me.add(evevtPlugin);
 	}
 
 	public void configInterceptor(Interceptors me) {
