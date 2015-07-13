@@ -10,18 +10,23 @@ public class CrmController extends Controller {
 	public void index() {
 		render("index.htm");
 	}
-	
+
+	public void main() {
+		setAttr("openid", getPara("openid", ""));
+		render("main.htm");
+	}
+
 	@RequiresAuthentication
 	public void home() {
 		render("home.htm");
 	}
-	
+
 	@RequiresAuthentication
 	@ActionKey("crm/wx/customer")
 	public void wxCustomer() {
 		render("wx-customer.htm");
 	}
-	
+
 	@RequiresAuthentication
 	@ActionKey("crm/wx/menus")
 	public void wxMenus() {

@@ -29,7 +29,6 @@ import frame.plugin.shiro.core.ShiroPlugin;
 import frame.plugin.shiro.freemarker.ShiroTags;
 import frame.plugin.tablebind.AutoTableBindPlugin;
 import frame.plugin.tablebind.SimpleNameStyles;
-import frame.sdk.fetion.kit.FetionPlugin;
 
 public class BaseConfig extends JFinalConfig {
 
@@ -40,7 +39,7 @@ public class BaseConfig extends JFinalConfig {
 		PropKit.use("config.txt");
 		me.setI18nDefaultBaseName("i18n");
 		me.setI18nDefaultLocale("zh_CN");
-		me.setDevMode(PropKit.getBoolean("wx.devMode", false));
+		me.setDevMode(PropKit.getBoolean("devMode", false));
 	}
 
 	public void configRoute(Routes me) {
@@ -49,14 +48,12 @@ public class BaseConfig extends JFinalConfig {
 	}
 
 	public void configPlugin(Plugins me) {
-		// 添加fetion支持
-		me.add(new FetionPlugin(PropKit.getLong("fetion.mobile"), PropKit.get("fetion.password")));
 		// 添加shiro支持
 		me.add(new ShiroPlugin(routes));
 		// 添加缓存支持
 		me.add(new EhCachePlugin(BaseConfig.class.getClassLoader().getResource("ehcache-model.xml")));
 		// 配置数据库连接池插件
-		DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("wx.jdbcUrl"), PropKit.get("wx.jdbcUser"), PropKit.get("wx.jdbcPassword"), PropKit.get("wx.jdbcDriver"));
+		DruidPlugin druidPlugin = new DruidPlugin(PropKit.get("jdbcUrl"), PropKit.get("jdbcUser"), PropKit.get("jdbcPassword"), PropKit.get("jdbcDriver"));
 		WallFilter wallFilter = new WallFilter();
 		wallFilter.setDbType(JdbcConstants.MYSQL);
 		druidPlugin.addFilter(wallFilter);
@@ -66,7 +63,7 @@ public class BaseConfig extends JFinalConfig {
 		AutoTableBindPlugin autoTableBindPlugin = new AutoTableBindPlugin(druidPlugin, SimpleNameStyles.LOWER_UNDERLINE);
 		autoTableBindPlugin.setShowSql(true);
 		autoTableBindPlugin.setContainerFactory(new CaseInsensitiveContainerFactory());
-		autoTableBindPlugin.setDevMode(PropKit.getBoolean("wx.devMode", false));
+		autoTableBindPlugin.setDevMode(PropKit.getBoolean("devMode", false));
 		me.add(autoTableBindPlugin);
 	}
 
